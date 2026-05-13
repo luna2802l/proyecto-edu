@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LA PERFECTA 🍔</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --bg:#0a0805;
+  --surface:#131009;
+  --cream:#f7edd8;
+  --amber:#d4870a;
+  --gold:#f0a500;
+  --red:#bf2d20;
+  --wa:#25D366;
+  --border:rgba(240,165,0,0.18);
+  --text-muted:rgba(247,237,216,0.55);
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  color:var(--cream);
+  font-family:'Outfit',sans-serif;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ────────────────────────────────
+   STICKY NAV / CATALOG
+──────────────────────────────── */
+.nav{
+  position:sticky;top:0;z-index:800;
+  background:rgba(10,8,5,0.88);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  max-width:1140px;margin:0 auto;
+  display:flex;align-items:center;
+  padding:0 24px;gap:24px;
+  overflow-x:auto;scrollbar-width:none;
+}
+.nav-inner::-webkit-scrollbar{display:none}
+
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:20px;font-style:italic;
+  color:var(--gold);
+  white-space:nowrap;
+  padding:14px 0;
+  flex-shrink:0;
+  letter-spacing:.02em;
+}
+
+.nav-sep{width:1px;height:40px;background:var(--border);flex-shrink:0}
+
+/* catalog card inside nav */
+.nav-product{
+  display:flex;align-items:center;gap:12px;
+  padding:8px 14px;border-radius:12px;
+  cursor:pointer;flex-shrink:0;
+  transition:background .2s;
+  border:1px solid transparent;
+}
+.nav-product:hover{background:rgba(240,165,0,0.09);border-color:var(--border)}
+
+.nav-thumb{
+  width:52px;height:52px;border-radius:10px;
+  object-fit:cover;border:1px solid var(--border);
+  background:#1a1510;
+  flex-shrink:0;
+  /* CSS burger fallback if image fails */
+}
+.nav-thumb-fallback{
+  width:52px;height:52px;border-radius:10px;
+  background:linear-gradient(135deg,#3d1f0a,#1a0d04);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;flex-shrink:0;
+}
+
+.nav-info{display:flex;flex-direction:column;gap:2px}
+.nav-name{font-size:13px;font-weight:600;white-space:nowrap;color:var(--cream)}
+.nav-price{
+  font-family:'Playfair Display',serif;
+  font-size:17px;color:var(--gold);
+  font-weight:700;line-height:1;
+}
+.nav-tag{
+  font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--wa);background:rgba(37,211,102,.12);
+  padding:2px 8px;border-radius:4px;
+  width:fit-content;
+}
+
+.nav-btn{
+  margin-left:auto;flex-shrink:0;
+  background:var(--wa);color:#fff;border:none;
+  border-radius:10px;
+  font-family:'Outfit',sans-serif;
+  font-weight:600;font-size:14px;
+  padding:10px 20px;
+  cursor:pointer;
+  display:flex;align-items:center;gap:8px;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  white-space:nowrap;
+}
+.nav-btn:hover{background:#1db954;transform:translateY(-1px);box-shadow:0 8px 24px rgba(37,211,102,.35)}
+.nav-btn svg{width:16px;height:16px;flex-shrink:0}
+
+/* ────────────────────────────────
+   HERO
+──────────────────────────────── */
+.hero{
+  min-height:100svh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  max-width:1200px;margin:0 auto;
+  padding:80px 48px;gap:80px;
+}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:48px 24px;gap:48px;text-align:center}
+  .hero-img{order:-1}
+  .hero-actions{justify-content:center}
+  .chips{justify-content:center}
+}
+
+.hero-text{display:flex;flex-direction:column;gap:0}
+
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);
+  background:rgba(240,165,0,.1);
+  border:1px solid rgba(240,165,0,.25);
+  padding:7px 16px;border-radius:100px;
+  margin-bottom:28px;width:fit-content;
+  animation:fadeDown .6s ease both;
+}
+.kicker-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--gold);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.8)}}
+
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(52px,8vw,110px);
+  line-height:.92;
+  font-weight:900;
+  margin-bottom:28px;
+  animation:fadeUp .8s .1s ease both;
+}
+.title-la{
+  display:block;
+  font-style:italic;
+  color:var(--text-muted);
+  font-size:.5em;
+  letter-spacing:.1em;
+  margin-bottom:4px;
+}
+.title-main{
+  display:block;
+  background:linear-gradient(140deg,#fff9ef 0%,var(--gold) 45%,#e05a10 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.title-sub{
+  display:block;
+  font-size:.42em;
+  font-style:italic;
+  -webkit-text-fill-color:var(--red);
+  color:var(--red);
+  letter-spacing:.05em;
+}
+
+.hero-desc{
+  font-size:16px;line-height:1.75;
+  color:var(--text-muted);font-weight:300;
+  margin-bottom:36px;max-width:440px;
+  animation:fadeUp .8s .2s ease both;
+}
+
+.price-row{
+  display:flex;align-items:flex-end;gap:16px;
+  margin-bottom:36px;
+  animation:fadeUp .8s .25s ease both;
+}
+.price-amount{
+  font-family:'Playfair Display',serif;
+  font-size:68px;font-weight:900;
+  color:var(--gold);line-height:1;
+}
+.price-meta{display:flex;flex-direction:column;gap:2px;padding-bottom:8px}
+.price-unit{font-size:12px;color:var(--text-muted);letter-spacing:.15em;text-transform:uppercase}
+.price-avail{font-size:12px;color:var(--wa);font-weight:500}
+
+.chips{
+  display:flex;gap:10px;flex-wrap:wrap;
+  margin-bottom:36px;
+  animation:fadeUp .8s .3s ease both;
+}
+.chip{
+  font-size:12px;font-weight:500;letter-spacing:.05em;
+  padding:6px 14px;border-radius:100px;
+  border:1px solid var(--border);
+  color:var(--text-muted);
+}
+
+.hero-actions{
+  display:flex;gap:14px;flex-wrap:wrap;
+  animation:fadeUp .8s .35s ease both;
+}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--wa);color:#fff;border:none;
+  padding:16px 32px;border-radius:14px;
+  font-family:'Outfit',sans-serif;font-weight:600;font-size:16px;
+  cursor:pointer;
+  transition:transform .2s,box-shadow .2s,background .2s;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 16px 44px rgba(37,211,102,.45);background:#1db954}
+.btn-primary svg{width:20px;height:20px;flex-shrink:0}
+
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;color:var(--cream);
+  border:1px solid var(--border);
+  padding:16px 24px;border-radius:14px;
+  font-family:'Outfit',sans-serif;font-weight:500;font-size:15px;
+  cursor:pointer;
+  transition:border-color .2s,background .2s;
+}
+.btn-secondary:hover{border-color:var(--gold);background:rgba(240,165,0,.08)}
+
+/* ────────────────────────────────
+   HERO IMAGE
+──────────────────────────────── */
+.hero-img{
+  position:relative;
+  animation:fadeUp .9s .05s ease both;
+}
+
+.img-card{
+  position:relative;
+  border-radius:28px;
+  overflow:hidden;
+  /* aspect ratio will be set */
+  box-shadow:
+    0 0 0 1px rgba(240,165,0,.12),
+    0 60px 100px rgba(0,0,0,.7),
+    0 0 60px rgba(191,45,32,.2),
+    0 0 120px rgba(191,45,32,.08);
+}
+
+/* THE REAL IMAGE — multiple fallbacks */
+.burger-img{
+  width:100%;
+  display:block;
+  aspect-ratio:3/4;
+  object-fit:cover;
+  object-position:center;
+  transition:transform .7s ease;
+  background:#1a1208;
+}
+.img-card:hover .burger-img{transform:scale(1.04)}
+
+/* gradient overlay */
+.img-card::after{
+  content:'';position:absolute;inset:0;
+  background:
+    linear-gradient(to top,rgba(10,8,5,.85) 0%,transparent 45%),
+    linear-gradient(to right,rgba(10,8,5,.3) 0%,transparent 40%);
+  pointer-events:none;
+}
+
+/* floating badges */
+.badge-price{
+  position:absolute;top:24px;right:24px;z-index:2;
+  background:var(--red);color:#fff;
+  font-family:'Playfair Display',serif;
+  font-size:28px;font-weight:900;
+  padding:14px 18px;border-radius:18px;
+  box-shadow:0 8px 28px rgba(191,45,32,.6);
+  animation:float 5s ease-in-out infinite;
+  line-height:1;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+.badge-fresh{
+  position:absolute;top:24px;left:24px;z-index:2;
+  background:rgba(10,8,5,.8);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--border);
+  color:var(--cream);
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  padding:8px 14px;border-radius:100px;
+}
+
+.img-info{
+  position:absolute;bottom:0;left:0;right:0;z-index:2;
+  padding:28px 28px 24px;
+}
+.img-info-title{
+  font-family:'Playfair Display',serif;
+  font-size:28px;font-weight:900;font-style:italic;
+  color:#fff;margin-bottom:6px;
+}
+.img-stars{color:var(--gold);font-size:14px;letter-spacing:.1em}
+
+/* decorative ring */
+.img-ring{
+  position:absolute;
+  width:130%;height:130%;
+  top:-15%;left:-15%;
+  border-radius:50%;
+  border:1px solid rgba(240,165,0,.06);
+  animation:spin 30s linear infinite;
+  pointer-events:none;
+  z-index:0;
+}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+
+/* ────────────────────────────────
+   TICKER STRIP
+──────────────────────────────── */
+.ticker{
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:16px 0;overflow:hidden;
+  margin:0 0 90px;
+}
+.ticker-track{
+  display:flex;gap:32px;width:max-content;
+  animation:marquee 25s linear infinite;
+}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-item{
+  font-size:12px;letter-spacing:.25em;text-transform:uppercase;
+  color:rgba(247,237,216,.3);
+  display:flex;align-items:center;gap:10px;white-space:nowrap;
+}
+.ticker-item b{color:var(--gold);font-weight:400}
+
+/* ────────────────────────────────
+   LAYERS SECTION
+──────────────────────────────── */
+.layers-section{
+  max-width:1140px;margin:0 auto;
+  padding:0 48px 100px;
+  display:grid;grid-template-columns:1fr 1fr;gap:32px;
+}
+@media(max-width:900px){.layers-section{grid-template-columns:1fr;padding:0 24px 80px}}
+
+.glass-card{
+  background:rgba(255,255,255,.033);
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:36px;
+  transition:border-color .3s,background .3s,transform .3s;
+}
+.glass-card:hover{
+  border-color:rgba(240,165,0,.32);
+  background:rgba(255,255,255,.055);
+  transform:translateY(-4px);
+}
+.gc-title{
+  font-family:'Playfair Display',serif;
+  font-size:32px;font-weight:900;font-style:italic;
+  color:var(--gold);margin-bottom:24px;
+}
+
+.stack{list-style:none;display:flex;flex-direction:column;gap:13px}
+.stack-item{
+  display:flex;align-items:center;gap:14px;
+  font-size:14px;color:rgba(247,237,216,.82);font-weight:400;
+}
+.swatch{
+  width:10px;height:10px;border-radius:50%;flex-shrink:0;
+  box-shadow:0 0 0 2px rgba(255,255,255,.08);
+}
+
+.gc-text{
+  font-size:15px;line-height:1.8;
+  color:rgba(247,237,216,.6);font-weight:300;
+}
+.gc-text strong{color:var(--gold);font-weight:600}
+.gc-text em{color:rgba(247,237,216,.9);font-style:italic}
+
+/* ────────────────────────────────
+   ORDER SECTION
+──────────────────────────────── */
+.order-section{
+  max-width:600px;margin:0 auto;
+  padding:0 24px 130px;
+}
+
+.order-header{text-align:center;margin-bottom:48px}
+.order-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(48px,8vw,80px);
+  font-weight:900;font-style:italic;
+  background:linear-gradient(135deg,var(--cream),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;margin-bottom:10px;
+}
+.order-sub{
+  font-size:13px;color:rgba(247,237,216,.3);
+  letter-spacing:.2em;text-transform:uppercase;
+}
+
+/* FORM */
+.field{margin-bottom:20px}
+.field label{
+  display:block;font-size:10px;
+  letter-spacing:.3em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:9px;font-weight:500;
+}
+.field input,.field textarea{
+  width:100%;
+  background:rgba(247,237,216,.04);
+  border:1px solid rgba(240,165,0,.18);
+  border-radius:14px;
+  padding:15px 20px;
+  color:var(--cream);
+  font-family:'Outfit',sans-serif;font-size:15px;
+  outline:none;resize:none;
+  transition:border-color .25s,background .25s,box-shadow .25s;
+}
+.field input::placeholder,.field textarea::placeholder{color:rgba(247,237,216,.2)}
+.field input:focus,.field textarea:focus{
+  border-color:var(--gold);
+  background:rgba(240,165,0,.06);
+  box-shadow:0 0 0 3px rgba(240,165,0,.08);
+}
+.field textarea{height:80px}
+
+/* qty */
+.qty-box{
+  display:flex;align-items:center;gap:18px;
+  background:rgba(247,237,216,.04);
+  border:1px solid rgba(240,165,0,.18);
+  border-radius:14px;padding:12px 20px;
+}
+.qb{
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid rgba(240,165,0,.3);
+  background:rgba(240,165,0,.1);
+  color:var(--gold);font-size:20px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:background .2s,transform .1s;
+  line-height:1;font-family:'Outfit',sans-serif;
+}
+.qb:hover{background:rgba(240,165,0,.22)}
+.qb:active{transform:scale(.88)}
+.qn{
+  font-family:'Playfair Display',serif;
+  font-size:36px;font-weight:700;color:var(--cream);
+  min-width:36px;text-align:center;
+}
+.qt{
+  margin-left:auto;
+  font-family:'Playfair Display',serif;
+  font-size:30px;font-weight:700;color:var(--gold);
+}
+
+/* submit */
+.btn-order{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  width:100%;padding:20px;
+  background:linear-gradient(135deg,#25D366,#1db954);
+  color:#fff;border:none;border-radius:16px;
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:18px;
+  cursor:pointer;margin-top:28px;
+  transition:transform .2s,box-shadow .2s;
+  position:relative;overflow:hidden;
+}
+.btn-order::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+  pointer-events:none;
+}
+.btn-order:hover{transform:translateY(-3px);box-shadow:0 18px 50px rgba(37,211,102,.45)}
+.btn-order:active{transform:translateY(0)}
+.btn-order svg{width:24px;height:24px;flex-shrink:0}
+
+.wa-sub{
+  text-align:center;font-size:12px;
+  color:rgba(247,237,216,.22);margin-top:14px;
+  letter-spacing:.08em;
+}
+
+/* divider */
+.divider{
+  width:56px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:0 auto 90px;
+}
+
+/* toast */
+.toast{
+  position:fixed;bottom:30px;left:50%;
+  transform:translateX(-50%) translateY(110px);
+  background:var(--gold);color:#0a0805;
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:15px;
+  padding:14px 28px;border-radius:100px;
+  z-index:9000;
+  transition:transform .45s cubic-bezier(.34,1.56,.64,1);
+  white-space:nowrap;pointer-events:none;
+  letter-spacing:.02em;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* glows */
+.glow{position:fixed;border-radius:50%;pointer-events:none;z-index:0}
+.glow-a{width:700px;height:700px;top:-250px;right:-250px;background:radial-gradient(circle,rgba(191,45,32,.12),transparent 68%)}
+.glow-b{width:500px;height:500px;bottom:0;left:-150px;background:radial-gradient(circle,rgba(212,135,10,.08),transparent 68%)}
+
+/* animations */
+@keyframes fadeUp{from{opacity:0;transform:translateY(32px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<div class="glow glow-a"></div>
+<div class="glow glow-b"></div>
+<div class="toast" id="toast">¡Pedido enviado! Abriendo WhatsApp 🍔</div>
+
+<!-- ════════════════════════════════
+     STICKY CATALOG NAV
+════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <span class="nav-logo">La Perfecta</span>
+    <div class="nav-sep"></div>
+
+    <!-- PRODUCT CARD IN NAV -->
+    <div class="nav-product" onclick="scrollOrder()">
+      <div class="nav-thumb-fallback" id="navThumbWrap">
+        <img id="navThumb"
+          src="https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=300"
+          alt="La Perfecta"
+          style="width:100%;height:100%;object-fit:cover;border-radius:9px;display:block"
+          onerror="this.parentElement.innerHTML='🍔'"
+        />
+      </div>
+      <div class="nav-info">
+        <span class="nav-name">La Perfecta</span>
+        <span class="nav-price">$7.000</span>
+        <span class="nav-tag">● Disponible</span>
+      </div>
+    </div>
+
+    <button class="nav-btn" onclick="scrollOrder()">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.522 5.847L0 24l6.335-1.502A11.96 11.96 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.371l-.36-.214-3.724.883.916-3.618-.236-.373A9.818 9.818 0 0112 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/>
+      </svg>
+      Pedir ahora
+    </button>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════
+     HERO
+════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="kicker">
+      <span class="kicker-dot"></span>
+      Entrega inmediata · Hecha al momento
+    </div>
+
+    <h1 class="hero-title">
+      <span class="title-la">La</span>
+      <span class="title-main">Perfecta</span>
+      <span class="title-sub">Hamburguesa</span>
+    </h1>
+
+    <p class="hero-desc">
+      Una sola opción — la correcta. Pan brioche artesanal tostado,
+      carne smash, doble queso cheddar y
+      salsas hechas en casa. Sin menú, sin confusión.
+    </p>
+
+    <div class="price-row">
+      <span class="price-amount">$7.000</span>
+      <div class="price-meta">
+        <span class="price-unit">por unidad</span>
+        <span class="price-avail">✓ Disponible ya</span>
+      </div>
+    </div>
+
+    <div class="chips">
+      <span class="chip">🥩 Carne 80/20</span>
+      <span class="chip">🧀 Doble Cheddar</span>
+      <span class="chip">🥖 Pan Brioche</span>
+      <span class="chip">🔥 Smash Style</span>
+    </div>
+
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="scrollOrder()">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.522 5.847L0 24l6.335-1.502A11.96 11.96 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.371l-.36-.214-3.724.883.916-3.618-.236-.373A9.818 9.818 0 0112 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+        Pedir por WhatsApp
+      </button>
+      <button class="btn-secondary" onclick="document.querySelector('.layers-section').scrollIntoView({behavior:'smooth'})">
+        Ver ingredientes ↓
+      </button>
+    </div>
+  </div>
+
+  <!-- IMAGE COLUMN -->
+  <div class="hero-img">
+    <div class="img-ring"></div>
+    <div class="img-card">
+      <span class="badge-fresh">🔥 Hecha al momento</span>
+      <div class="badge-price">$7k</div>
+
+      <!-- Primary image: Unsplash direct CDN -->
+      <img class="burger-img" id="heroImg"
+        src="https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=1200"
+        alt="La Perfecta Hamburguesa"
+        onerror="tryNextImg(this)"
+        data-idx="0"
+      />
+
+      <div class="img-info">
+        <div class="img-info-title">La Perfecta</div>
+        <div class="img-stars">★★★★★ &nbsp;·&nbsp; Solo una. La mejor.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<!-- LAYERS -->
+<div class="layers-section">
+  <div class="glass-card">
+    <div class="gc-title">Capa a Capa</div>
+    <ul class="stack">
+      <li class="stack-item"><span class="swatch" style="background:#c8a46c"></span>Pan brioche tostado con mantequilla</li>
+      <li class="stack-item"><span class="swatch" style="background:#e8c040"></span>Mostaza Dijon + mayo artesanal</li>
+      <li class="stack-item"><span class="swatch" style="background:#3d8c3a"></span>Lechuga mantequilla fresca</li>
+      <li class="stack-item"><span class="swatch" style="background:#d93a2b"></span>Tomate en rodajas</li>
+      <li class="stack-item"><span class="swatch" style="background:#a82820"></span>Cebolla caramelizada 45 min</li>
+      <li class="stack-item"><span class="swatch" style="background:#f0c840"></span>Queso cheddar doble capa</li>
+      <li class="stack-item"><span class="swatch" style="background:#7a3220"></span>Smash burger 150g — carne 80/20</li>
+      <li class="stack-item"><span class="swatch" style="background:#4a2810"></span>Pan brioche base</li>
+    </ul>
+  </div>
+  <div class="glass-card">
+    <div class="gc-title">Una Sola Razón</div>
+    <p class="gc-text">
+      No hay menú. No hay <em>opciones</em>. Solo <em>La Perfecta</em>.<br><br>
+      La carne se muele a diario. Se smashea en plancha de hierro fundido
+      a 280 °C — 90 segundos exactos para ese borde crocante con centro jugoso
+      que no se logra de otra forma.<br><br>
+      <strong>$7.000</strong> — precio fijo, calidad constante.
+      Pide por WhatsApp y recíbela donde estés.
+    </p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ORDER FORM -->
+<section class="order-section" id="pedir">
+  <div class="order-header">
+    <h2 class="order-title">Tu Pedido</h2>
+    <p class="order-sub">WhatsApp directo · 321 789 5535</p>
+  </div>
+
+  <div class="field">
+    <label>Nombre completo</label>
+    <input type="text" id="nombre" placeholder="Ej: Sebastián López" autocomplete="name"/>
+  </div>
+  <div class="field">
+    <label>Dirección de entrega</label>
+    <input type="text" id="direccion" placeholder="Calle, barrio, punto de referencia..." autocomplete="street-address"/>
+  </div>
+  <div class="field">
+    <label>Aula / Bloque (si aplica)</label>
+    <input type="text" id="aula" placeholder="Ej: Bloque B · Aula 205"/>
+  </div>
+  <div class="field">
+    <label>Cantidad · $7.000 por unidad</label>
+    <div class="qty-box">
+      <button class="qb" id="menos">−</button>
+      <span class="qn" id="cant">1</span>
+      <button class="qb" id="mas">+</button>
+      <span class="qt" id="total">$7.000</span>
+    </div>
+  </div>
+  <div class="field">
+    <label>Nota especial (opcional)</label>
+    <textarea id="nota" placeholder="Sin cebolla, extra salsa, sin queso..."></textarea>
+  </div>
+
+  <button class="btn-order" id="btnPedir">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.522 5.847L0 24l6.335-1.502A11.96 11.96 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.003-1.371l-.36-.214-3.724.883.916-3.618-.236-.373A9.818 9.818 0 0112 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+    Enviar pedido por WhatsApp
+  </button>
+  <p class="wa-sub">Se abrirá WhatsApp con tu pedido listo · 321 789 5535</p>
+</section>
+
+<script>
+// ── IMAGE FALLBACKS ──────────────────────────────────────
+const IMGS = [
+  'https://images.pexels.com/photos/2983101/pexels-photo-2983101.jpeg?auto=compress&cs=tinysrgb&w=1200',
+  'https://images.unsplash.com/photo-1550317138-10000687a72b?auto=format&fit=crop&w=700&q=85',
+  'https://images.unsplash.com/photo-1607013251379-e6eecfffe234?auto=format&fit=crop&w=700&q=85',
+  'https://images.unsplash.com/photo-1561758033-d89a9ad46330?auto=format&fit=crop&w=700&q=85',
+  // last resort: picsum food category (always works)
+  'https://picsum.photos/seed/burger2024/700/900'
+];
+
+function tryNextImg(el) {
+  const idx = parseInt(el.dataset.idx || '0') + 1;
+  if (idx < IMGS.length) {
+    el.dataset.idx = idx;
+    el.src = IMGS[idx];
+  } else {
+    // Pure CSS burger fallback
+    const frame = el.parentElement;
+    el.style.display = 'none';
+    frame.style.background = 'linear-gradient(160deg,#2a1205 0%,#1a0c04 40%,#0d0600 100%)';
+    frame.insertAdjacentHTML('afterbegin',
+      '<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1;gap:8px">'
+      + '<div style="font-size:140px;filter:drop-shadow(0 20px 40px rgba(191,45,32,.6))">🍔</div>'
+      + '<div style="font-family:serif;font-size:22px;color:#f0a500;font-style:italic">La Perfecta</div>'
+      + '</div>'
+    );
+  }
+}
+
+// Also try nav thumb
+document.getElementById('navThumb').onerror = function(){
+  this.parentElement.innerHTML = '🍔';
+};
+
+// ── TICKER ──────────────────────────────────────────────
+const words = [
+  {t:'Pan Brioche',c:''},{t:'Carne 80/20',c:''}  ,{t:'Queso Cheddar',c:''},
+  {t:'$7.000',c:'color:var(--gold);font-weight:600'},{t:'Smash Style',c:''},
+  {t:'Cebolla Caramelizada 45min',c:''},{t:'Mayo Artesanal',c:''},
+  {t:'Plancha 280°C',c:''},{t:'Tomate Fresco',c:''},
+  {t:'Entrega Inmediata',c:'color:var(--wa)'}
+];
+const ticker = document.getElementById('ticker');
+const sep = () => `<span class="ticker-item" style="color:var(--gold);opacity:.4">✦</span>`;
+const makeItems = () => words.map(w=>`<span class="ticker-item" ${w.c?`style="${w.c}"`:''}>● ${w.t}</span>`).join(sep());
+ticker.innerHTML = makeItems() + sep() + makeItems();
+
+// ── QTY ─────────────────────────────────────────────────
+let qty = 1;
+const PRICE = 7000;
+const cantEl = document.getElementById('cant');
+const totalEl = document.getElementById('total');
+const fmt = n => '$' + (n * PRICE).toLocaleString('es-CO');
+
+document.getElementById('mas').onclick = () => { qty++; cantEl.textContent=qty; totalEl.textContent=fmt(qty); };
+document.getElementById('menos').onclick = () => { if(qty>1){qty--;cantEl.textContent=qty;totalEl.textContent=fmt(qty);} };
+
+// ── SCROLL ──────────────────────────────────────────────
+function scrollOrder(){ document.getElementById('pedir').scrollIntoView({behavior:'smooth'}) }
+
+// ── ORDER ────────────────────────────────────────────────
+document.getElementById('btnPedir').onclick = () => {
+  const nombre    = document.getElementById('nombre').value.trim();
+  const direccion = document.getElementById('direccion').value.trim();
+  const aula      = document.getElementById('aula').value.trim();
+  const nota      = document.getElementById('nota').value.trim();
+
+  if (!nombre || !direccion) {
+    alert('Por favor ingresa tu nombre y dirección 🍔');
+    return;
+  }
+
+  const msg = [
+    '🍔 *PEDIDO — LA PERFECTA*',
+    '',
+    `👤 *Cliente:* ${nombre}`,
+    `📍 *Dirección:* ${direccion}`,
+    aula ? `🏫 *Aula/Bloque:* ${aula}` : null,
+    `🔢 *Cantidad:* ${qty} hamburguesa${qty>1?'s':''}`,
+    `💰 *Total:* ${fmt(qty)}`,
+    nota ? `📝 *Nota:* ${nota}` : null,
+    '',
+    '¡Gracias! Espero confirmación 🙏'
+  ].filter(Boolean).join('\n');
+
+  window.open(`https://wa.me/573217895535?text=${encodeURIComponent(msg)}`, '_blank');
+
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3500);
+};
+</script>
+</body>
+</html>
